@@ -36,15 +36,19 @@ CONFIGURE_FLAGS = \
 	--without-glib \
 	--with-coretext=auto
 
+BUILD_DIR = $(OUT_DIR)/_build
+
 all:
 	git init && git add . && git commit -m initial
-	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch \
-	  HARFBUZZ=$(CARGO_MANIFEST_DIR)/harfbuzz
-	cd $(OUT_DIR) && $(CARGO_MANIFEST_DIR)/harfbuzz/configure $(CONFIGURE_FLAGS) \
-	  CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)"
-	cd $(OUT_DIR) && make -j$(NUM_JOBS)
-	cd $(OUT_DIR) && make install
+	mkdir -p $(BUILD_DIR)
+	cp -a $(CARGO_MANIFEST_DIR)/harfbuzz $(BUILD_DIR)
+	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch HARFBUZZ="$(BUILD_DIR)"
+	cd $(BUILD_DIR) &&
+	  ./configure $(CONFIGURE_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" &&
+	  make -j$(NUM_JOBS) &&
+	  make install
 	git diff
 	rm -rf .git
+	rm -rf $(BUILD_DIR)
 
 .PHONY: all

@@ -13,4 +13,4 @@ matrix:
     - os: linux
       rust: stable
 script:
-  - cargo package --manifest-path=harfbuzz-sys/Cargo.toml
+  - cargo package -vv --manifest-path=harfbuzz-sys/Cargo.toml
