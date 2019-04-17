@@ -36,19 +36,20 @@ CONFIGURE_FLAGS = \
 	--without-glib \
 	--with-coretext=auto
 
-BUILD_DIR = $(OUT_DIR)/_build
+# Create a temporary, uniquely named directory
+BUILD_DIR := $(shell mktemp -d $(OUT_DIR)/rust_build.XXXXX)
 
 all:
-	rm -rf $(BUILD_DIR)
-	git init && git add . && git commit -m initial
-	cp -a $(CARGO_MANIFEST_DIR)/harfbuzz $(BUILD_DIR)
+	# Copy to a temporary build directory to avoid changing files.
+	cp -a $(CARGO_MANIFEST_DIR)/harfbuzz/* $(BUILD_DIR)
+	# Touch to avoid regenerating files.
 	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch HARFBUZZ="$(BUILD_DIR)"
+	# Configure, build, and install inside the temporary directory.
 	cd $(BUILD_DIR) && \
 	  ./configure $(CONFIGURE_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" && \
 	  make -j$(NUM_JOBS) && \
 	  make install
+	# Remove the unneeded directory to avoid taking up unnecessary space.
 	rm -rf $(BUILD_DIR)
-	git diff
-	rm -rf .git
 
 .PHONY: all
