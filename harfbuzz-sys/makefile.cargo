@@ -40,7 +40,7 @@ BUILD_DIR = $(OUT_DIR)/_build
 
 all:
 	git init && git add . && git commit -m initial
-	mkdir -p $(BUILD_DIR)
+	rm -rf $(BUILD)
 	cp -a $(CARGO_MANIFEST_DIR)/harfbuzz $(BUILD_DIR)
 	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch HARFBUZZ="$(BUILD_DIR)"
 	cd $(BUILD_DIR) &&
