@@ -47,8 +47,8 @@ all:
 	  ./configure $(CONFIGURE_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" && \
 	  make -j$(NUM_JOBS) && \
 	  make install
+	rm -rf $(BUILD_DIR)
 	git diff
 	rm -rf .git
-	rm -rf $(BUILD_DIR)
 
 .PHONY: all
