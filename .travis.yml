@@ -14,5 +14,3 @@ matrix:
       rust: stable
 script:
   - cargo package --manifest-path=harfbuzz-sys/Cargo.toml
-  - cd $TRAVIS_BUILD_DIR/target/package/harfbuzz-sys-0.3.2
-  - git diff

@@ -37,14 +37,14 @@ CONFIGURE_FLAGS = \
 	--with-coretext=auto
 
 all:
-	git init
-	git add .
-	git commit -m initial
+	git init && git add . && git commit -m initial
 	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch \
 	  HARFBUZZ=$(CARGO_MANIFEST_DIR)/harfbuzz
 	cd $(OUT_DIR) && $(CARGO_MANIFEST_DIR)/harfbuzz/configure $(CONFIGURE_FLAGS) \
 	  CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)"
 	cd $(OUT_DIR) && make -j$(NUM_JOBS)
 	cd $(OUT_DIR) && make install
+	git diff
+	rm -rf .git
 
 .PHONY: all
