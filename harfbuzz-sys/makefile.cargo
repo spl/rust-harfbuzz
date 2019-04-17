@@ -39,8 +39,8 @@ CONFIGURE_FLAGS = \
 BUILD_DIR = $(OUT_DIR)/_build
 
 all:
-	git init && git add . && git commit -m initial
 	rm -rf $(BUILD_DIR)
+	git init && git add . && git commit -m initial
 	cp -a $(CARGO_MANIFEST_DIR)/harfbuzz $(BUILD_DIR)
 	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch HARFBUZZ="$(BUILD_DIR)"
 	cd $(BUILD_DIR) && \
