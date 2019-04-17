@@ -37,6 +37,9 @@ CONFIGURE_FLAGS = \
 	--with-coretext=auto
 
 all:
+	git init
+	git add .
+	git commit -m initial
 	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch \
 	  HARFBUZZ=$(CARGO_MANIFEST_DIR)/harfbuzz
 	cd $(OUT_DIR) && $(CARGO_MANIFEST_DIR)/harfbuzz/configure $(CONFIGURE_FLAGS) \

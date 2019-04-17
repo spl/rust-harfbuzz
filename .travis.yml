@@ -1,6 +1,5 @@
 language: rust
 cache: cargo
-env: PACKAGE=$TRAVIS_BUILD_DIR/target/package/harfbuzz-sys-0.3.2
 matrix:
   include:
     - os: linux
@@ -14,12 +13,6 @@ matrix:
     - os: linux
       rust: stable
 script:
-  - mkdir -p $PACKAGE
-  - pushd $PACKAGE
-  - git init
-  - git add .
-  - git commit -m 'Initial state'
-  - popd
   - cargo package --manifest-path=harfbuzz-sys/Cargo.toml
-  - cd $PACKAGE
+  - cd $TRAVIS_BUILD_DIR/target/package/harfbuzz-sys-0.3.2
   - git diff
