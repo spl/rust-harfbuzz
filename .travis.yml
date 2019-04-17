@@ -18,6 +18,7 @@ script:
   - pushd $PACKAGE
   - git init
   - git add .
+  - git commit -m 'Initial state'
   - popd
   - cargo package --manifest-path=harfbuzz-sys/Cargo.toml
   - cd $PACKAGE
