@@ -43,9 +43,9 @@ all:
 	rm -rf $(BUILD_DIR)
 	cp -a $(CARGO_MANIFEST_DIR)/harfbuzz $(BUILD_DIR)
 	$(MAKE) -f $(CARGO_MANIFEST_DIR)/makefile.touch touch HARFBUZZ="$(BUILD_DIR)"
-	cd $(BUILD_DIR) &&
-	  ./configure $(CONFIGURE_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" &&
-	  make -j$(NUM_JOBS) &&
+	cd $(BUILD_DIR) && \
+	  ./configure $(CONFIGURE_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" && \
+	  make -j$(NUM_JOBS) && \
 	  make install
 	git diff
 	rm -rf .git
